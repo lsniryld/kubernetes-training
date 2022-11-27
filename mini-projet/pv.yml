@@ -4,6 +4,7 @@ metadata:
   name: persistent-volume
   labels:
     type: local
+  namespace: tp-wordpress
 spec:
   storageClassName: manual
   capacity:
@@ -12,4 +13,3 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data"
-  

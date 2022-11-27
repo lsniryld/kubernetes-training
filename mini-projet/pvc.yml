@@ -4,6 +4,7 @@ metadata:
   name: pvc
   labels:
     app: mysql
+  namespace: tp-wordpress
 spec:
   storageClassName: manual
   accessModes:

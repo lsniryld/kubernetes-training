@@ -4,6 +4,7 @@ metadata:
   name: wordpress
   labels:
     app: wordpress
+  namespace: tp-wordpress
 spec:
   selector:
     matchLabels:
@@ -22,7 +23,10 @@ spec:
         - name: WORDPRESS_DB_HOST
           value: mysql
         - name: WORDPRESS_DB_PASSWORD
-          value: password
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: ROOT_PASSWORD
         ports:
         - containerPort: 80
           name: wordpress
@@ -32,4 +36,4 @@ spec:
       volumes:
         - name: wordpress-storage
           hostPath:
-            path: /data-wordpress
+            path: /data-wp

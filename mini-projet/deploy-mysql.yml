@@ -1,14 +1,16 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mysql
   labels:
     app: mysql
+  namespace: tp-wordpress
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: mysql
+  serviceName: mysvc-clusterip
   template:
     metadata:
       labels:
@@ -16,18 +18,15 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql
+        image: mysql:5.6
         ports:
-        - containerPort: 3306
+          - containerPort: 3306
         env:
           - name: MYSQL_ROOT_PASSWORD
-            value: password
-          - name: MYSQL_DATABASE
-            value: ninidb
-          - name: MYSQL_USER
-            value: nini
-          - name: MYSQL_PASSWORD
-            value: nini
+            valueFrom: 
+               secretKeyRef: 
+                key: ROOT_PASSWORD
+                name: mysecret
         volumeMounts:
           - mountPath: /var/lib/mysql
             name: mysql-data
@@ -35,3 +34,4 @@ spec:
         - name: mysql-data
           persistentVolumeClaim:
             claimName: pvc
+

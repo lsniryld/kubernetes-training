@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: my-svc
+  namespace: tp-wordpress
 spec:
   type: NodePort
   selector:
