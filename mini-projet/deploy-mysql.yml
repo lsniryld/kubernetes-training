@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app: mysql
-  serviceName: mysvc-clusterip
+  serviceName: mysql
   template:
     metadata:
       labels:
