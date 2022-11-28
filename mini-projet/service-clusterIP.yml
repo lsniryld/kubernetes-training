@@ -3,12 +3,14 @@ kind: Service
 metadata:
   name: mysql
   labels:
-    app: mysql
+    name: wordpress
   namespace: tp-wordpress
 spec:
   clusterIP: None
   selector:
-    app: mysql
+    app: wordpress
+    tier: mysql
   ports:
     - protocol: TCP
       port: 3306
+      targetPort: 3306

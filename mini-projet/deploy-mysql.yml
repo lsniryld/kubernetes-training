@@ -1,24 +1,25 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: mysql
   labels:
-    app: mysql
+    app: wordpress
   namespace: tp-wordpress
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysql
-  serviceName: mysql
+      app: wordpress
+      tier: mysql
   template:
     metadata:
       labels:
-        app: mysql
+        app: wordpress
+        tier: mysql
     spec:
       containers:
       - name: mysql
-        image: mysql:5.6
+        image: mysql:5.7
         ports:
           - containerPort: 3306
         env:
@@ -26,6 +27,15 @@ spec:
             valueFrom: 
                secretKeyRef: 
                 key: ROOT_PASSWORD
+                name: mysecret
+          - name: MYSQL_DATABASE
+            value: worpress
+          - name: MYSQL_USER
+            value: nini 
+          - name: MYSQL_PASSWORD
+            valueFrom: 
+               secretKeyRef: 
+                key: MYSQL_PASSWORD
                 name: mysecret
         volumeMounts:
           - mountPath: /var/lib/mysql

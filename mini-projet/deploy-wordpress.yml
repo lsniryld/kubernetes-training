@@ -6,27 +6,34 @@ metadata:
     app: wordpress
   namespace: tp-wordpress
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: wordpress
+      tier: frontend
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: wordpress
+        tier: frontend
     spec:
       containers:
-      - image: wordpress:4.8-apache
+      - image: wordpress
         name: wordpress
         env:
+        - name: WORDPRESS_DB_USER
+          value: nini
+        - name: WORDPRESS_DB_NAME
+          value: wordpress
         - name: WORDPRESS_DB_HOST
-          value: mysql
+          value: wordpress
         - name: WORDPRESS_DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysecret
-              key: ROOT_PASSWORD
+              key: WORDPRESS_DB_PASSWORD
         ports:
         - containerPort: 80
           name: wordpress
