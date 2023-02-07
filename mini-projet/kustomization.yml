@@ -1,0 +1,9 @@
+resources:
+  - namespace.yml
+  - secret.yml
+  - pv.yml
+  - pvc.yml
+  - service-clusterIP.yml
+  - service-nodeport.yml
+  - deploy-mysql.yml
+  - deploy-wordpress.yml
