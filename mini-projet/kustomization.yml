@@ -1,8 +1,11 @@
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=PASSWORD
+
 resources:
-  - namespace.yml
-  - secret.yml
-  - pv.yml
   - pvc.yml
+  - pvc-wordpress.yml
   - service-clusterIP.yml
   - service-nodeport.yml
   - deploy-mysql.yml
